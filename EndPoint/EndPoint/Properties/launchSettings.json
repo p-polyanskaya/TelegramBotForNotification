@@ -1,0 +1,14 @@
+﻿{
+  "profiles": {
+    "endpoint": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_HTTP_PORT": "5000",
+        "ASPNETCORE_GRPC_PORT": "5002"
+      }
+    }
+  }
+}
