@@ -1,18 +1,26 @@
 using Application;
 using Consumers;
 using CronJobs;
+using EndPoint;
 using MediatR;
+using Options;
 using Quartz;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddHostedService<TelegramConsumer>();
-builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblies(typeof(BotSenderMessageCommand.Handler).Assembly));
+builder.Services.AddHostedService<TelegramConsumer>();
 
+builder.Services.Configure<ConsumersSettings>(builder.Configuration.GetSection(nameof(ConsumersSettings)));
+builder.Services.Configure<BotSettings>(builder.Configuration.GetSection(nameof(BotSettings)));
+
+builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblies(typeof(BotSenderMessageCommand.Handler).Assembly));
+builder.Services.SetTelegramBotClient();
+
+/*
 builder.Services.AddQuartz(q =>  
 {
     q.UseMicrosoftDependencyInjectionScopedJobFactory();
-
+    
     // Create a "key" for the job
     var jobKey = new JobKey("HelloWorldJob");
 
@@ -26,7 +34,9 @@ builder.Services.AddQuartz(q =>
         .WithCronSchedule("0/5 * * * * ?")); // run every 5 seconds
 
 });
-builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+*/
+
+//builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 var app = builder.Build();
 
