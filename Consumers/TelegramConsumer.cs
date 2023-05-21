@@ -42,9 +42,16 @@ public class TelegramConsumer : BackgroundService
             var consumeResult = consumer.Consume(stoppingToken);
 
             var request = new BotSenderMessageCommand.Request(consumeResult.Message.Value);
-            using var scope = _serviceProvider.CreateScope();
-            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-            await mediator.Send(request, stoppingToken);
+            try
+            {
+                using var scope = _serviceProvider.CreateScope();
+                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                await mediator.Send(request, stoppingToken);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Ошибка при отправке новости в телеграм. " + ex.Message);
+            }
 
             consumer.Commit(consumeResult);
         }

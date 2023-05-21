@@ -15,7 +15,7 @@ public class TelegramMessage
 
     public override string ToString()
     {
-        return $"Новость от источника: {Message.Source}, автора: {Message.Author}. " +
+        return $"Новость от источника: {Message.Source}, автора: {Message.Author} в {Message.TimeOfMessage}. " +
                $"{Message.Text}";
     }
 }
