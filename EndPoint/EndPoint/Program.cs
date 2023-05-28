@@ -17,7 +17,17 @@ builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblies(typeof(BotSend
 builder.Services.SetTelegramBotClient();
 
 //настройка миграций постгреса
-builder.Services.SetPostgres();
+var connectionString = builder
+    .Configuration
+    .GetSection("PostgresConnection:Connection")
+    .Get<string>();
+
+if (connectionString is null)
+{
+    throw new InvalidOperationException("Cannot find connection string");
+}
+
+builder.Services.SetPostgres(connectionString);
 
 builder.Services.AddScoped<MessagesRepository>();
 

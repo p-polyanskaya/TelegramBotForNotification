@@ -43,11 +43,11 @@ public static class BotSenderMessageCommand
 
             var chatId = request.Message.Topic switch
             {
-                "Sports" => -903823901,
+                "Sports" => -1001947756174,
                 //"Tech" => -930657577,
                 _ => UndefinedChatId
             };
-            
+              
             try
             {
                 if (chatId != UndefinedChatId)

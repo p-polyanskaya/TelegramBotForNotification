@@ -16,14 +16,13 @@ public static class DependencyInjection
         services.AddScoped<TelegramBotClient>(s => telegramBotClient);
     }
     
-    public static void SetPostgres(this IServiceCollection services)
+    public static void SetPostgres(this IServiceCollection services, string connectionString)
     {
         services
             .AddFluentMigratorCore()
             .ConfigureRunner(rb => rb
                 .AddPostgres()
-                .WithGlobalConnectionString(
-                    "Server=127.0.0.1;Port=5433;Userid=postgres;Password=postgres;Database=course_db")
+                .WithGlobalConnectionString(connectionString)
                 .ScanIn(typeof(CreatePostgresTable).Assembly).For.Migrations())
             .AddLogging(lb => lb.AddFluentMigratorConsole());
     }
