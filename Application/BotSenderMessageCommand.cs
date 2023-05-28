@@ -44,7 +44,7 @@ public static class BotSenderMessageCommand
             var chatId = request.Message.Topic switch
             {
                 "Sports" => -903823901,
-                "Tech" => -930657577,
+                //"Tech" => -930657577,
                 _ => UndefinedChatId
             };
             
@@ -56,6 +56,7 @@ public static class BotSenderMessageCommand
                         chatId: chatId,
                         text: request.Message.ToString(),
                         cancellationToken: cancellationToken);
+                    await Task.Delay(3000);
                 }
 
                 await _repository.Update(request.Message.Message.Id, "success");
